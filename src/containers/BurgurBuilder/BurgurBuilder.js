@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Auxiliary from '../../hoc/Auxiliary';
 import Burgur from '../../components/Burgur/Burgur';
 import BuildControls from '../../components/Burgur/BuildControls/BuildControls';
+import Model from '../../components/UI/Model/Model';
+import OrderSummery from '../../components/Burgur/OrderSummery/OrderSummery'
 import _ from 'lodash';
 
 const INGRIDIEN_PRICES = {
@@ -18,7 +20,14 @@ class BurgurBuilder extends Component {
       bacon: 0,
       cheese: 0,
     },
-    totalPrice: 4
+    totalPrice: 4,
+    purchasable: false
+  }
+
+  updatePurchaseState(newIngridients) {
+    var ingridientsSum = _.sum(_.values(newIngridients));
+    console.log(ingridientsSum, this.state.ingridients)
+    this.setState({purchasable: ingridientsSum > 0})
   }
 
   addIngridient = ({type}) => {
@@ -29,6 +38,7 @@ class BurgurBuilder extends Component {
     newPrice = INGRIDIEN_PRICES[type] + newPrice;
 
     this.setState({ingridients: newIngridients, totalPrice: newPrice});
+    this.updatePurchaseState(newIngridients);
   }
 
   removeIngridient = ({type}) => {
@@ -39,6 +49,7 @@ class BurgurBuilder extends Component {
     newIngridients[type] = newIngridients[type] === 0 ? 0 : newIngridients[type] - 1; 
 
     this.setState({ingridients: newIngridients, totalPrice: newPrice});
+    this.updatePurchaseState(newIngridients);
   }
 
   render () {
@@ -50,11 +61,13 @@ class BurgurBuilder extends Component {
 
     return (
       <Auxiliary >
+        <Model><OrderSummery ingridients={this.state.ingridients}/></Model>
         <Burgur ingridients={this.state.ingridients}/>
         <BuildControls 
           add={({type}) => this.addIngridient({type})} 
           remove={({type}) => this.removeIngridient({type})}
-          disabled={disabledInfo}  
+          disabled={disabledInfo} 
+          purchasable={this.state.purchasable} 
           price={this.state.totalPrice}
         />
       </Auxiliary>  
