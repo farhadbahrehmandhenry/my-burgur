@@ -1,5 +1,6 @@
 import React from 'react';
 import Auxiliary from '../../../hoc/Auxiliary';
+import Button from '../../UI/Button/Button';
 import _ from 'lodash';
 
 const OrderSummery = (props) => {
@@ -18,7 +19,8 @@ const OrderSummery = (props) => {
           </li>)
         )}
       </ul>
-      <p>Continue to chackout?</p>
+      <Button title='Cancel' buttonType='Danger' clicked={() => props.cancelHandler()}/>
+      <Button title='Continue' buttonType='Success' clicked={() => props.continueHandler()}/>
     </Auxiliary>
   )
 };

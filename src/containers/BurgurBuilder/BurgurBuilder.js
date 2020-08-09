@@ -3,7 +3,7 @@ import Auxiliary from '../../hoc/Auxiliary';
 import Burgur from '../../components/Burgur/Burgur';
 import BuildControls from '../../components/Burgur/BuildControls/BuildControls';
 import Model from '../../components/UI/Model/Model';
-import OrderSummery from '../../components/Burgur/OrderSummery/OrderSummery'
+import OrderSummery from '../../components/Burgur/OrderSummery/OrderSummery';
 import _ from 'lodash';
 
 const INGRIDIEN_PRICES = {
@@ -21,7 +21,8 @@ class BurgurBuilder extends Component {
       cheese: 0,
     },
     totalPrice: 4,
-    purchasable: false
+    purchasable: false,
+    purchasing: false
   }
 
   updatePurchaseState(newIngridients) {
@@ -52,6 +53,18 @@ class BurgurBuilder extends Component {
     this.updatePurchaseState(newIngridients);
   }
 
+  purchaseHandler() {
+    this.setState({purchasing: !this.state.purchasing});
+  }
+
+  cancelPurchaseHandler() {
+    this.setState({purchasing: false});
+  }
+
+  continuePurchaseHandler() {
+    
+  }
+
   render () {
     var disabledInfo = {...this.state.ingridients};
 
@@ -61,7 +74,13 @@ class BurgurBuilder extends Component {
 
     return (
       <Auxiliary >
-        <Model><OrderSummery ingridients={this.state.ingridients}/></Model>
+        <Model show={this.state.purchasing} backDropClicked={() => this.cancelPurchaseHandler()}>
+          <OrderSummery 
+            ingridients={this.state.ingridients} 
+            cancelHandler={() => this.cancelPurchaseHandler()} 
+            continueHandler={() => this.continuePurchaseHandler()}
+          />
+        </Model>
         <Burgur ingridients={this.state.ingridients}/>
         <BuildControls 
           add={({type}) => this.addIngridient({type})} 
@@ -69,6 +88,7 @@ class BurgurBuilder extends Component {
           disabled={disabledInfo} 
           purchasable={this.state.purchasable} 
           price={this.state.totalPrice}
+          onOrder={() => this.purchaseHandler()}
         />
       </Auxiliary>  
     );
