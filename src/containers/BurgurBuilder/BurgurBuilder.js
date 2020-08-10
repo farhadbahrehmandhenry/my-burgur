@@ -79,6 +79,7 @@ class BurgurBuilder extends Component {
             ingridients={this.state.ingridients} 
             cancelHandler={() => this.cancelPurchaseHandler()} 
             continueHandler={() => this.continuePurchaseHandler()}
+            total={this.state.totalPrice}
           />
         </Model>
         <Burgur ingridients={this.state.ingridients}/>

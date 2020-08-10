@@ -19,6 +19,9 @@ const OrderSummery = (props) => {
           </li>)
         )}
       </ul>
+
+      <h3>Total: ${props.total}</h3>
+      <p>di you want to continue to checkout?</p>
       <Button title='Cancel' buttonType='Danger' clicked={() => props.cancelHandler()}/>
       <Button title='Continue' buttonType='Success' clicked={() => props.continueHandler()}/>
     </Auxiliary>
