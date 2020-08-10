@@ -14,7 +14,6 @@ const Slidedrawer = (props) => {
     classN = [classes.SlideDrawer, classes.Open];
   }
 
-  console.log(props, classN)
   return (
     <Auxiliary>
       <Backdrop show={props.open} clicked={() => props.closed()}/>

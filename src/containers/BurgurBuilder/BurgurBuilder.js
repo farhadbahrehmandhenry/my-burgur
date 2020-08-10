@@ -27,7 +27,7 @@ class BurgurBuilder extends Component {
 
   updatePurchaseState(newIngridients) {
     var ingridientsSum = _.sum(_.values(newIngridients));
-    console.log(ingridientsSum, this.state.ingridients)
+
     this.setState({purchasable: ingridientsSum > 0})
   }
 
