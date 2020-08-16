@@ -20,7 +20,6 @@ class layout extends Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <Auxiliary>
         <div>
