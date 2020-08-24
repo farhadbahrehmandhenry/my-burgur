@@ -4,9 +4,6 @@ import Button from '../../UI/Button/Button';
 import _ from 'lodash';
 
 class OrderSummery extends Component {
-  componentDidMount() {
-    console.log('updates')
-  }
   render () {
     var ingridients = [];
 

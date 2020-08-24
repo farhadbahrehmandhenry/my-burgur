@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './BurgurIngridient.css';
+import classes from './BurgerIngridient.css';
 import PropTypes from 'prop-types';
 
-const burgurIngridient = (props) => {
+const burgerIngridient = (props) => {
   let ingridient = null;
 
   switch(props.type) {
@@ -35,8 +35,8 @@ const burgurIngridient = (props) => {
   return ingridient;
 }
 
-burgurIngridient.propTypes = {
+burgerIngridient.propTypes = {
   type: PropTypes.string.isRequired
 };
 
-export default burgurIngridient;
+export default burgerIngridient;

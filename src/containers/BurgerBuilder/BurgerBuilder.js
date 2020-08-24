@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Auxiliary from '../../hoc/Auxiliary';
-import Burgur from '../../components/Burgur/Burgur';
-import BuildControls from '../../components/Burgur/BuildControls/BuildControls';
+import Burger from '../../components/Burger/Burger';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Model from '../../components/UI/Model/Model';
-import OrderSummery from '../../components/Burgur/OrderSummery/OrderSummery';
+import OrderSummery from '../../components/Burger/OrderSummery/OrderSummery';
 import axios from '../../axiosOrder';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -15,7 +15,7 @@ const INGRIDIEN_PRICES = {
   cheese: 1,
   bacon: 2
 }
-class BurgurBuilder extends Component {
+class BurgerBuilder extends Component {
   state = {
     ingridients: null,
     totalPrice: 4,
@@ -69,17 +69,11 @@ class BurgurBuilder extends Component {
   }
 
   continuePurchaseHandler() {
-    var order = {ingridients: this.state.ingridients, price: this.state.totalPrice}
-
-    this.setState({isLoading: true});
-
-    axios.post('/orders.json', order)
-    .then(response => {
-      process.env.NODE_ENV === 'development' && console.log(response);
-
-      this.setState({isLoading: false, purchasing: false});
-    })
-    .catch(error => this.setState({isLoading: false, purchasing: false}))
+    this.props.history.push({
+      pathname: '/checkout', 
+      ingridients: this.state.ingridients,
+      price: this.state.totalPrice 
+    });
   }
 
   render () {
@@ -105,7 +99,7 @@ class BurgurBuilder extends Component {
         </Model>
         {this.state.ingridients || !this.state.error ? 
           <Auxiliary>
-            <Burgur ingridients={this.state.ingridients}/>
+            <Burger ingridients={this.state.ingridients}/>
             <BuildControls 
               add={({type}) => this.addIngridient({type})} 
               remove={({type}) => this.removeIngridient({type})}
@@ -124,4 +118,4 @@ class BurgurBuilder extends Component {
   }
 }
 
-export default withErrorHandler(BurgurBuilder, axios);
+export default withErrorHandler(BurgerBuilder, axios);

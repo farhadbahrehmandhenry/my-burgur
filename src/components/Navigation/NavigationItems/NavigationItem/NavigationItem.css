@@ -36,6 +36,13 @@
     border-bottom: 4px solid transparent;
 
   }
+
+  .NavigationItem a:hover,
+  .NavigationItem a {
+    /* background-color: red;
+    border-bottom: 4px solid #40A4CB;
+    color: white; */
+  }
   
   .NavigationItem a:hover,
   .NavigationItem a:active,

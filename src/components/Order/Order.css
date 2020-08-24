@@ -1,0 +1,11 @@
+.Order {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid black;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.Price {
+  margin-left: 1rem;
+}
