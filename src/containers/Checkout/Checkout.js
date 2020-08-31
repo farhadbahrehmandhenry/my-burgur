@@ -2,21 +2,11 @@ import React, {Component} from 'react';
 import CheckoutSummery from '../../components/Order/CheckoutSummery/CheckoutSummery';
 import {Route} from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
+import {connect} from 'react-redux';
 
 class Checkout extends Component {
-  state = {
-    ingridients: {}
-  }
-
-  componentWillMount() {
-    this.setState({
-      ingridients: this.props.location.ingridients,
-      price: this.props.location.price
-    });
-  }
-
   render() {
-    var {price, ingridients} = this.state;
+    var {ingridients} = this.props;
     return (
       <React.Fragment>
         <CheckoutSummery 
@@ -26,11 +16,17 @@ class Checkout extends Component {
         />
         <Route 
           path= {this.props.match.path + '/contact-data'} 
-          render={(props) => <ContactData ingridients={ingridients} price={price} {...props}/>}
+          component={ContactData}
         />
       </React.Fragment>
     )
   }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+  return {
+    ingridients: state.ingridients
+  }
+}
+
+export default connect(mapStateToProps)(Checkout);

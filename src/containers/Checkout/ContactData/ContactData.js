@@ -5,6 +5,7 @@ import axios from '../../../axiosOrder';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import _ from 'lodash';
+import {connect} from 'react-redux';
 
 class ContactData extends Component {
   state = {
@@ -68,7 +69,7 @@ class ContactData extends Component {
   
     _.forEach(this.state.orderForm, (value, item) => formData[item] = value.value);
 
-    var valid = _.every(_.map(_.values(formData), 'valid'), valid => valid === true);
+    var valid = _.every(_.map(_.values(this.state.orderForm), 'valid'), valid => valid === true);
 
     if (valid) {
       this.setState({isLoading: true});
@@ -122,7 +123,7 @@ class ContactData extends Component {
     var formData = {};
   
     _.forEach(this.state.orderForm, (value, item) => formData[item] = value.value);
-
+console.log(formData, this.state.orderForm, _.values(this.state.orderForm),  _.every(_.map(_.values(formData), 'valid'), valid => valid === true))
     return (
       <div className={classes.ContactData}>
         <h4>Fill in your information</h4>
@@ -145,7 +146,7 @@ class ContactData extends Component {
             buttonType='Success' 
             clicked={(event) => this.order(event)} 
             title='Order'
-            disabled = {!_.every(_.map(_.values(formData), 'valid'), valid => valid === true)}
+            disabled = {!_.every(_.map(_.values(this.state.orderForm), 'valid'), valid => valid === true)}
             />
         </form>
         }
@@ -154,4 +155,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ingridients: state.ingridients,
+    price: state.price
+  }
+}
+
+export default connect(mapStateToProps)(ContactData);
