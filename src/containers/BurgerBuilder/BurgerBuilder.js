@@ -9,21 +9,17 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import _ from 'lodash';
 import {connect} from 'react-redux';
-import {actions} from '../../store/actions';
+import {addIngridients, deleteIngridients} from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
   state = {
     purchasable: false,
     purchasing: false,
-    isLoading: false,
     successPost: false,
-    error: false
   }
 
   componentDidMount() {
-    // axios.get('/ingridients.json')
-    // .then(response => this.setState({ingridients: response.data}))
-    // .catch(error =>  this.setState({error: error}))
+
   }
 
   purchaseHandler() {
@@ -48,16 +44,12 @@ class BurgerBuilder extends Component {
     return (
       <Auxiliary >
         <Model show={this.state.purchasing} backDropClicked={() => this.cancelPurchaseHandler()}>
-        {!this.state.isLoading ? 
           <OrderSummery 
             ingridients={this.props.ingridients} 
             cancelHandler={() => this.cancelPurchaseHandler()} 
             continueHandler={() => this.continuePurchaseHandler()}
             total={this.props.totalPrice}
           />
-          :
-          <Spinner />
-        }
         </Model>
         {this.props.ingridients || !this.state.error ? 
           <Auxiliary>
@@ -89,8 +81,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addIngridient: (type) => dispatch({type: actions.addIngridients, item: type}),
-    deleteIngridient: (type) => dispatch({type: actions.deleteIngridients, item: type})
+    addIngridient: (type) => dispatch(addIngridients(type)),
+    deleteIngridient: (type) => dispatch(deleteIngridients(type))
 
   }
 }
